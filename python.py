@@ -1,5 +1,5 @@
 #!/usr/bin/python3.6
-import os
+import os, re
 
 #def getls(self):
 #    self.ls = list(sorted(os.listdir()))
@@ -17,6 +17,7 @@ try:
         mode = int(input())
         if mode == 0:
             os.system("clear")
+
         elif mode == 1:
             os.chdir(os.path.expanduser("~")) #cd to home
             if 'testBackups' in os.listdir(): #ensures a Backups folder exists
@@ -30,7 +31,12 @@ try:
             if len(os.listdir()) > 5:
                 print("Backups at limit. Removing oldest files.")
                 ls = list(sorted(os.listdir()))
-                #os.remove(ls[0])
+                persist = open('.persist_backups.txt','r')
+                #print(persist.readline())
+                monthBackup = re.match("backup????-??-01")
+                if ls[0] != monthBackup: 
+                    os.remove(ls[0])
+
         else:
             print("Not ready yet")
     else:
